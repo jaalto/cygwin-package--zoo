@@ -1,0 +1,67 @@
+From 6155e537f45410d06c8bf4560deb841843aebe46 Mon Sep 17 00:00:00 2001
+From: Jari Aalto <jari.aalto@cante.net>
+Date: Thu, 21 Feb 2008 00:10:59 +0200
+Subject: [PATCH] makefile: Add install target
+
+Signed-off-by: Jari Aalto <jari.aalto@cante.net>
+---
+ makefile |   34 +++++++++++++++++++++++++++++++++-
+ 1 files changed, 33 insertions(+), 1 deletions(-)
+
+diff --git a/makefile b/makefile
+index ec3c282..ba1ce1d 100644
+--- a/makefile
++++ b/makefile
+@@ -26,6 +26,25 @@ LINTFLAGS = -DLINT
+ OPTIM = -O -Wall
+ DESTDIR = /usr/local/bin
+ 
++prefix		= /usr
++exec_prefix	= $(prefix)
++man_prefix	= $(prefix)/share
++
++PACKAGE		= zoo
++INSTALL		= /usr/bin/install
++INSTALL_BIN	= $(INSTALL) -m 755
++INSTALL_SUID	= $(INSTALL) -m 4755
++INSTALL_DATA	= $(INSTALL) -m 644
++
++INSTALL_OBJS_BIN   = $(PACKAGE) fiz
++INSTALL_OBJS_MAN1  = *.1
++INSTALL_OBJS_SHARE =
++
++BINDIR		= $(DESTDIR)$(exec_prefix)/bin
++SHAREDIR	= $(DESTDIR)$(prefix)/share/$(PACKAGE)
++LIBDIR		= $(DESTDIR)$(prefix)/lib/$(PACKAGE)
++MANDIR1		= $(DESTDIR)$(man_prefix)/man/man1
++
+ #List of all object files created for Zoo
+ ZOOOBJS = addbfcrc.o addfname.o basename.o comment.o crcdefs.o \
+ 		getfile.o lzc.o lzd.o machine.o makelist.o misc.o misc2.o \
+@@ -67,9 +86,22 @@ help :
+ 	@echo "lint_bsd:     Run lint for 4.3BSD"
+ 	@echo "lint_generic: Run lint for generic **IX"
+ 	@echo "lint_turboc:  Run lint under **IX for checking Turbo C/MSDOS code"
++install-man:
++	# install-man
++	$(INSTALL_BIN) -d $(MANDIR1)
++	$(INSTALL_DATA) $(INSTALL_OBJS_MAN1) $(MANDIR1)
++
++install-bin:
++	# install-bin
++	$(INSTALL_BIN) -d $(BINDIR)
++	$(INSTALL_BIN) -s $(INSTALL_OBJS_BIN) $(BINDIR)
++
++install: all install-bin install-man
++
++.PHONY: clean distclean install install-man install-bin
+ 
+ # install alpha zoo as "tzoo"
+-install:
++install-old:
+ 	mv zoo $(DESTDIR)/tzoo
+ 
+ # install beta zoo as "bzoo"
+-- 
+1.5.3.8
+

@@ -1,0 +1,73 @@
+zoo
+------------------------------------------
+
+Manipulate zoo archives
+
+Zoo is used to create and maintain collections of files in compressed
+form. It uses a Lempel-Ziv compression algorithm that gives space
+savings in the range of 20% to 80% depending on the type of file data.
+Zoo can store and selectively extract multiple generations of the same
+file.
+
+Runtime requirements:
+  cygwin
+
+Build requirements:
+  cygwin
+
+Canonical homepage:
+  http://packages.debian.org/zoo
+
+Canonical download:
+  See above
+
+Version control repository:
+
+Mailing list:
+
+Forum / Wiki:
+
+IRC channel:
+
+Upstream contact:
+  Maintainer: Rahul Dhesi <dhesi@rahul.net>
+  Bugs:
+
+License:
+  Custom (Public domain)
+
+Language:
+  C
+
+------------------------------------------
+
+Build instructions:
+  unpack zoo-*-src.tar.bz2
+    if you use setup to install this src package, it will be
+    unpacked under /usr/src automatically
+  cd /usr/src
+  ./zoo*.sh all
+
+This will create:
+  installable binary package
+
+------------------------------------------
+
+Files included in the binary distribution:
+
+  <See content of *.tar.gz>
+
+------------------------------------------
+
+Port Notes:
+- All Debian patches were applied
+
+----- version 2.10-2 -----
+- 2008-02-21 Jari Aalto
+- Fix binary packaging content
+
+----- version 2.10-1 -----
+- Initial release 2008-02-16 Jari Aalto
+
+Cygwin port maintained by: Jari Aalto <jari.aalto@cante.net>
+Copyright (C) 2008 Jari Aalto; Licensed under GPL v2 or later

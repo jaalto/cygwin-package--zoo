@@ -1,0 +1,107 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 03_fix_manage_archive_under_AMD64.dpatch by Jose Carlos Medeiros <debian@psabs.com.br>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: patch to solve problems managing files under AMD64 and maybe under others 64 archs.
+
+[ -f debian/patches/00patch-opts ] && . debian/patches/00patch-opts
+patch_opts="${patch_opts:--f --no-backup-if-mismatch ${2:+-d $2}}"
+
+if [ $# -lt 1 ]; then
+  echo >&2 "`basename $0`: script expects -patch|-unpatch as argument"
+  exit 1
+fi
+
+case "$1" in
+  -patch) patch $patch_opts -p1 < $0;;
+  -unpatch) patch $patch_opts -p1 -R < $0;;
+  *)
+    echo >&2 "`basename $0`: script expects -patch|-unpatch as argument"
+    exit 1;;
+esac
+
+exit 0
+
+@DPATCH@
+diff -urNad zoo-2.10~/makefile zoo-2.10/makefile
+--- zoo-2.10~/makefile	2005-11-16 12:10:06.773065688 -0200
++++ zoo-2.10/makefile	2005-11-16 12:12:50.816127352 -0200
+@@ -54,6 +54,7 @@
+ 	@echo "convex:       Convex C200 series"
+ 	@echo "sysv:         System V Release 2 or 3; or SCO Xenix"
+ 	@echo "linux:        Linux"
++	@echo "linux64:      Linux with 64 bit long"
+ 	@echo "scodos:       Cross-compiler under SCO Xenix/UNIX for MS-DOS"
+ 	@echo "xenix286:     Older Xenix/286 (not tested)"
+ 	@echo "xenix68k:     Xenix/68000 (not tested)"
+@@ -99,6 +100,10 @@
+ linux:
+ 	$(MAKE) CC="gcc" CFLAGS="-c $(OPTIM) $(LINTFLAGS) -DLINUX -DANSI_HDRS" $(TARGETS)
+ 
++# Linux64
++linux64:
++	$(MAKE) CC="gcc" CFLAGS="-c $(OPTIM) $(LINTFLAGS) -DLINUX -DLONG64 -DANSI_HDRS" $(TARGETS)
++
+ # ULTRIX 4.1
+ ultrix:
+ 	$(MAKE) CFLAGS="-c $(OPTIM) -DULTRIX" $(TARGETS)
+diff -urNad zoo-2.10~/misc.c zoo-2.10/misc.c
+--- zoo-2.10~/misc.c	2005-11-16 12:10:06.775065384 -0200
++++ zoo-2.10/misc.c	2005-11-16 12:20:48.366528656 -0200
+@@ -173,7 +173,11 @@
+ 
+    frd_zooh (header, zoo_file);
+ 
++#ifdef LONG64
++   if ((int)(header->zoo_start = header->zoo_minus) != 0)
++#else
+    if ((header->zoo_start + header->zoo_minus) != 0L)
++#endif
+       prterror ('f', failed_consistency);
+    if (ver_too_high (header))
+       prterror ('f', wrong_version, header->major_ver, header->minor_ver);
+diff -urNad zoo-2.10~/zoodel.c zoo-2.10/zoodel.c
+--- zoo-2.10~/zoodel.c	1991-07-05 13:00:00.000000000 -0300
++++ zoo-2.10/zoodel.c	2005-11-16 12:20:19.776874944 -0200
+@@ -138,7 +138,11 @@
+    
+    /* read archive header */
+    frd_zooh (&zoo_header, zoo_file);
++#ifdef LONG64
++   if ((int)(zoo_header.zoo_start + zoo_header.zoo_minus) != 0)
++#else
+    if ((zoo_header.zoo_start + zoo_header.zoo_minus) != 0L)
++#endif
+       prterror ('f', failed_consistency);
+    if (ver_too_high (&zoo_header))
+       prterror ('f', wrong_version, zoo_header.major_ver, zoo_header.minor_ver);
+diff -urNad zoo-2.10~/zooext.c zoo-2.10/zooext.c
+--- zoo-2.10~/zooext.c	2005-11-16 12:10:06.783064168 -0200
++++ zoo-2.10/zooext.c	2005-11-16 12:22:08.373365768 -0200
+@@ -164,7 +164,11 @@
+ } else {
+    /* read header */
+    frd_zooh (&zoo_header, zoo_file);
++#ifdef LONG64
++   if ((int)(zoo_header.zoo_start + zoo_header.zoo_minus) != 0) {
++#else
+    if ((zoo_header.zoo_start + zoo_header.zoo_minus) != 0L) {
++#endif
+       prterror ('w', failed_consistency);
+       bad_header++;
+ 		exit_status = 1;
+diff -urNad zoo-2.10~/zoopack.c zoo-2.10/zoopack.c
+--- zoo-2.10~/zoopack.c	2005-11-16 12:10:06.786063712 -0200
++++ zoo-2.10/zoopack.c	2005-11-16 12:23:01.145343208 -0200
+@@ -140,7 +140,11 @@
+ /* Read the header of the old archive. */
+ frd_zooh(&old_zoo_header, zoo_file);
+ 
++#ifdef LONG64
++if ((int)(old_zoo_header.zoo_start + old_zoo_header.zoo_minus) != 0) {
++#else
+ if ((old_zoo_header.zoo_start + old_zoo_header.zoo_minus) != 0L) {
++#endif
+    prterror ('w', failed_consistency);
+    ++bad_header;                    /* remember for future error message */
+ }

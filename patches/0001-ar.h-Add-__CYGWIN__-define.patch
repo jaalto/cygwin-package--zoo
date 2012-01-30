@@ -1,0 +1,35 @@
+From 3952ba498498570beb9d0b507bae0e9b29089dc2 Mon Sep 17 00:00:00 2001
+From: Jari Aalto <jari.aalto@cante.net>
+Date: Sat, 16 Feb 2008 02:50:41 +0200
+Subject: [PATCH] ar.h: Add __CYGWIN__ define
+
+---
+ ar.h |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/ar.h b/ar.h
+index 5b95f7a..141609b 100644
+--- a/ar.h
++++ b/ar.h
+@@ -16,7 +16,7 @@ Adapted from "ar" archiver written by Haruhiko Okumura.
+ /* uchar should be 8 bits or more */
+ /* typedef unsigned char  uchar;   -- already in zoo.h */
+ 
+-#ifndef _SYS_TYPES_H
++#if ! defined(_SYS_TYPES_H) || defined(__CYGWIN__)
+ typedef unsigned int   uint;    /* 16 bits or more */
+ typedef unsigned short ushort;  /* 16 bits or more */
+ typedef unsigned long  ulong;   /* 32 bits or more */
+@@ -50,7 +50,8 @@ typedef T_UINT16		  t_uint16;	/* exactly 16 bits */
+ /* ar.c */
+ 
+ extern int unpackable;
+-extern ulong origsize, compsize;
++extern ulong origsize;
++extern ulong compsize;
+ 
+ /* all the prototypes follow here for all files */
+ 
+-- 
+1.5.3.8
+
