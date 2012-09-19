@@ -16,7 +16,8 @@ file.
 CHANGES SINCE LAST RELEASE
 ==========================
 
-No user visible changes. Update to latest Debian patch set.
+No user visible changes. Update to latest Debian patch set which
+contains AMD64 fix for LP#892788 and Debian#335114
 
 INSTALL OR UPGRADE NOTES
 ========================

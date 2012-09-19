@@ -63,7 +63,8 @@ Port Notes:
 
 ----- version 2.10-3 -----
 - Updated release 2012-09-19 Jari Aalto
-- Migrate to Debian 2.10-27 patch set.
+- Migrate to Debian 2.10-27 patch set which contains
+  fix for LP#892788 and Debian#335114
 
 ----- version 2.10-2 -----
 - 2008-02-21 Jari Aalto
