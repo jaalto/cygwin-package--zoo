@@ -13,7 +13,7 @@ Runtime requirements:
   cygwin
 
 Build requirements:
-  cygwin
+  quilt
 
 Canonical homepage:
   http://packages.debian.org/zoo
