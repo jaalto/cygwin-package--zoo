@@ -6,14 +6,12 @@ Subject: [PATCH] makefile: Add install target
 Signed-off-by: Jari Aalto <jari.aalto@cante.net>
 ---
  makefile |   34 +++++++++++++++++++++++++++++++++-
- 1 files changed, 33 insertions(+), 1 deletions(-)
+ 1 file changed, 33 insertions(+), 1 deletion(-)
 
-diff --git a/makefile b/makefile
-index ec3c282..ba1ce1d 100644
 --- a/makefile
 +++ b/makefile
-@@ -26,6 +26,25 @@ LINTFLAGS = -DLINT
- OPTIM = -O -Wall
+@@ -30,6 +30,25 @@ LDFLAGS = `dpkg-buildflags --get LDFLAGS
+ 
  DESTDIR = /usr/local/bin
  
 +prefix		= /usr
@@ -38,7 +36,7 @@ index ec3c282..ba1ce1d 100644
  #List of all object files created for Zoo
  ZOOOBJS = addbfcrc.o addfname.o basename.o comment.o crcdefs.o \
  		getfile.o lzc.o lzd.o machine.o makelist.o misc.o misc2.o \
-@@ -67,9 +86,22 @@ help :
+@@ -71,9 +90,22 @@ help :
  	@echo "lint_bsd:     Run lint for 4.3BSD"
  	@echo "lint_generic: Run lint for generic **IX"
  	@echo "lint_turboc:  Run lint under **IX for checking Turbo C/MSDOS code"
@@ -62,6 +60,3 @@ index ec3c282..ba1ce1d 100644
  	mv zoo $(DESTDIR)/tzoo
  
  # install beta zoo as "bzoo"
--- 
-1.5.3.8
-
