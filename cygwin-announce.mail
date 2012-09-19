@@ -1,6 +1,5 @@
--- Copyright (C) 2008 Jari Aalto; Licensed under GPL v2 or later
 To: cygwin-announce@cygwin.com
-Subject: Updated: zoo 2.10-2 -- Manipulate zoo archives
+Subject: Updated: zoo 2.10-3 -- Manipulate zoo archives
 
 PACKAGE DESCRIPTION
 ===================
@@ -17,7 +16,7 @@ file.
 CHANGES SINCE LAST RELEASE
 ==========================
 
-Cygwin: Fix binary package content.
+No user visible changes. Update to latest Debian patch set.
 
 INSTALL OR UPGRADE NOTES
 ========================
