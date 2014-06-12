@@ -5,4 +5,4 @@ savings in the range of 20% to 80% depending on the type of file data.
 Zoo can store and selectively extract multiple generations of the same
 file."
 category: Archive
-requires: cygwin
+requires:
